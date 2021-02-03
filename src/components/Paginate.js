@@ -7,7 +7,7 @@ const Paginate = ({ pages, page }) => {
       <nav>
         <ul className="pagination">
           {[...Array(pages).keys()].map((x) => (
-            <li key={x} className="page-item">
+            <li key={x + 1} className="page-item">
               <Link to={`/page/${x + 1}`} className="page-link">
                 {" "}
                 {x + 1}
