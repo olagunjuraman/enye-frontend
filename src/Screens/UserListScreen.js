@@ -2,16 +2,17 @@ import React, { useEffect, useState } from "react";
 import TableList from "../components/TableList";
 import axios from "axios";
 import Paginate from "../components/Paginate";
+import Loader from '../components/Loader'
 
-const UserListScreen = ({ match }) => {
-  let currentPage = match.params.pageNumber || 1;
+const UserListScreen = () => {
   const [data, setData] = useState([]);
-  const [profiles, setProfiles] = useState([]);
   const [keyword, setKeyword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [profilePerPage, setProfilePerPage] = useState(20);
+  const [loading, setLoading] = useState(true);
+  const [profilePerPage] = useState(20);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const pages = Math.ceil(profiles.length / profilePerPage);
+  const pages = Math.ceil(data.length / profilePerPage);
+
   useEffect(() => {
     const fetchData = async () => {
       const {
@@ -20,8 +21,8 @@ const UserListScreen = ({ match }) => {
         },
       } = await axios.get("https://api.enye.tech/v1/challenge/records");
 
-      setProfiles(profiles);
       setData(profiles);
+      setLoading(false)
     };
 
     fetchData();
@@ -38,6 +39,10 @@ const UserListScreen = ({ match }) => {
     );
   };
 
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <>
       <div class="form-group has-search">
@@ -52,8 +57,12 @@ const UserListScreen = ({ match }) => {
           ></input>
         </div>
       </div>
-      <TableList data={search(currentProfile)} />
-      <Paginate pages={pages} page={currentPage} />
+      {loading ? <Loader/> : ( <>
+         <TableList data={search(currentProfile)} />
+         <Paginate pages={pages} page={currentPage} paginate={paginate} />
+         </>
+      )}
+     
     </>
   );
 };

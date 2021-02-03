@@ -1,17 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-const Paginate = ({ pages, page }) => {
+const Paginate = ({ pages, page, paginate }) => {
   return (
     pages > 1 && (
       <nav>
         <ul className="pagination">
           {[...Array(pages).keys()].map((x) => (
             <li key={x + 1} className="page-item">
-              <Link to={`/page/${x + 1}`} className="page-link">
+              <NavLink
+                to={`/`}
+                className="page-link"
+                onClick={() => paginate(x + 1)}
+              >
                 {" "}
                 {x + 1}
-              </Link>
+              </NavLink>
             </li>
           ))}
         </ul>
