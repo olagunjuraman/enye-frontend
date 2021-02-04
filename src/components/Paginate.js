@@ -7,10 +7,11 @@ const Paginate = ({ pages, page, paginate }) => {
       <nav>
         <ul className="pagination">
           {[...Array(pages).keys()].map((x) => (
-            <li key={x + 1} className="page-item">
+            <li key={x + 1} className={x + 1 === page ? "page-item active" : undefined} >
               <NavLink
                 to={`/`}
                 className="page-link"
+                
                 onClick={() => paginate(x + 1)}
               >
                 {" "}

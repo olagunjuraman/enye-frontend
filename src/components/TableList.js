@@ -2,7 +2,7 @@ import React from "react";
 import { Table } from "react-bootstrap";
 
 const TableList = ({ data }) => {
-  const columns = data[0] && Object.keys(data[0]);
+  const columns = data[0] && Object.keys(data[0]).splice(0, 15)
   return (
     <div>
       <Table striped bordered hover responsive className="table-sm">
@@ -11,7 +11,7 @@ const TableList = ({ data }) => {
         </thead>
         <tbody>
           {data.map((data) => (
-            <tr key={data.Latitude}>
+            <tr key={data.id}>
               <td>{data.FirstName}</td>
               <td>{data.LastName}</td>
               <td>{data.Gender}</td>
